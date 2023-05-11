@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 
 const DistanceConverter: React.FC = () => {
   const [selectedDistanceMeasurement, setDistanceMeasurement] = useState('kilometers');
+  const [convertedValue, setConvertedValue] = useState<string>('');
   const conversionValueInputRef = useRef<HTMLInputElement>(null);
 
   const distanceConvertSubmitHandler = (e: React.FormEvent) => {
@@ -15,13 +16,13 @@ const DistanceConverter: React.FC = () => {
     if(selectedDistanceMeasurement === 'kilometers' ) {
       const miles = Math.round(((enteredValue / 1.609) + Number.EPSILON) * 100) / 100
 
-      console.log(miles);
+      setConvertedValue(`${miles} mi`);
+
     }else if(selectedDistanceMeasurement === 'miles' ) {
       const km = Math.round(((enteredValue * 1.609) + Number.EPSILON) * 100) / 100
 
-      console.log(km);
-    }
-    
+      setConvertedValue(`${km} km`);
+    } 
   }
 
   return (
@@ -43,6 +44,7 @@ const DistanceConverter: React.FC = () => {
 
         <button id="myButton" type="submit">Convert</button>
       </form>
+      <p>Result: {convertedValue}</p>
     </>
   );
 };
