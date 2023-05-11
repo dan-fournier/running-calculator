@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const DistanceConverter: React.FC = () => {
+  const [selectedDistanceMeasurement, setDistanceMeasurement] = useState('kilometers');
   const conversionValueInputRef = useRef<HTMLInputElement>(null);
 
   const distanceConvertSubmitHandler = (e: React.FormEvent) => {
@@ -8,21 +9,36 @@ const DistanceConverter: React.FC = () => {
     e.preventDefault();
 
     // this will never be null because it is initialized when the form is submitted and that can only happen after it's been rendered  
-    const enteredValue = conversionValueInputRef.current!.value;
-    console.log(enteredValue);
+    // using parseInt to coerce this input string into a number
+    const enteredValue = parseInt(conversionValueInputRef.current!.value);
+    
+    if(selectedDistanceMeasurement === 'kilometers' ) {
+      const miles = Math.round(((enteredValue / 1.609) + Number.EPSILON) * 100) / 100
+
+      console.log(miles);
+    }else if(selectedDistanceMeasurement === 'miles' ) {
+      const km = Math.round(((enteredValue * 1.609) + Number.EPSILON) * 100) / 100
+
+      console.log(km);
+    }
+    
   }
 
   return (
     <>
       <h1>Distance Converter</h1>
       <form onSubmit={distanceConvertSubmitHandler}>
-        <div>
-          <label htmlFor="conversion-value">Convert number of kilometers to miles</label>
+        <div className="calculator">
+          <label htmlFor="conversion-value">Convert a distance:</label>
           <input type="number" id="conversion-value" ref={conversionValueInputRef} />
-          <select name="distance" id="mileage">
-            <option value="kilometers">Kilometers</option>
-            <option value="miles">Miles</option>
-          </select>
+          
+          <label>
+            Choose distance measurement:
+            <select value={selectedDistanceMeasurement} onChange={ e => setDistanceMeasurement(e.target.value)}>
+              <option value="kilometers">Kilometers</option>
+              <option value="miles">Miles</option>
+            </select>
+          </label>
         </div>
 
         <button id="myButton" type="submit">Convert</button>
