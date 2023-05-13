@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import React from 'react';
 
 export default function DistanceConverter() {
   const [selectedDistanceMeasurement, setDistanceMeasurement] = useState('kilometers');
@@ -27,24 +28,26 @@ export default function DistanceConverter() {
 
   return (
     <>
-      <h1>Distance Converter</h1>
-      <form onSubmit={distanceConvertSubmitHandler}>
-        <div className="calculator">
+      <div className="card shadow-xl p-12">
+        <h1 className="text-3xl font-bold mb-3 self-center">Distance Converter</h1>
+        <form className="w-full max-w-xs" onSubmit={distanceConvertSubmitHandler}>
           <label htmlFor="conversion-value">Convert a distance:</label>
-          <input type="number" id="conversion-value" ref={conversionValueInputRef} />
+          <input className="input input-bordered w-full max-w-xs" type="number" id="conversion-value" ref={conversionValueInputRef} />
           
-          <label>
-            Choose distance measurement:
-            <select value={selectedDistanceMeasurement} onChange={ e => setDistanceMeasurement(e.target.value)}>
+          <label className="label">
+            <span className="label-text">Choose distance measurement:</span>
+          </label>
+            <select className="select select-bordered max-w-xs w-full" value={selectedDistanceMeasurement} onChange={ e => setDistanceMeasurement(e.target.value)}>
               <option value="kilometers">Kilometers</option>
               <option value="miles">Miles</option>
             </select>
-          </label>
-        </div>
 
-        <button id="myButton" type="submit">Convert</button>
-      </form>
-      <p>Result: {convertedValue}</p>
+          <div className="flex justify-center">
+            <button className="btn w-64 rounded-full mt-8 justify-center" id="myButton" type="submit">Convert</button>
+          </div>
+        </form>
+        <p className="font-bold mt-6">Result: {convertedValue}</p>
+      </div>
     </>
   );
 }
