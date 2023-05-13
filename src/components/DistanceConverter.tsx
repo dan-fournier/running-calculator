@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-const DistanceConverter: React.FC = () => {
+export default function DistanceConverter() {
   const [selectedDistanceMeasurement, setDistanceMeasurement] = useState('kilometers');
   const [convertedValue, setConvertedValue] = useState<string>('');
   const conversionValueInputRef = useRef<HTMLInputElement>(null);
@@ -47,6 +47,4 @@ const DistanceConverter: React.FC = () => {
       <p>Result: {convertedValue}</p>
     </>
   );
-};
-
-export default DistanceConverter;
+}
